@@ -1,0 +1,71 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Выберите язык тренировки:");
+        Console.WriteLine("1. Русский");
+        Console.WriteLine("2. Английский");
+        Console.Write("Ваш выбор (1 или 2): ");
+        int choice = int.Parse(Console.ReadLine());
+
+        string[] characterSets;
+        if (choice == 1)
+        {
+            characterSets = new string[]
+            {
+                "а", "б", "в", "г", "д", "е", "ё", "ж", "з", "и",
+                "й", "к", "л", "м", "н", "о", "п", "р", "с", "т",
+                "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь",
+                "э", "ю", "я"
+            };
+        }
+        else if (choice == 2)
+        {
+            characterSets = new string[]
+            {
+                "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+                "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+                "u", "v", "w", "x", "y", "z"
+            };
+        }
+        else
+        {
+            Console.WriteLine("Некорректный выбор. Завершение программы.");
+            return;
+        }
+
+        Random random = new Random();
+        int score = 0;
+
+        Console.WriteLine("Нажмите Esc для выхода из режима тренажера.");
+
+        while (true)
+        {
+            string targetCharacter = characterSets[random.Next(characterSets.Length)];
+
+            Console.Write($"Введите символ '{targetCharacter}': ");
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+            if (keyInfo.Key == ConsoleKey.Escape)
+            {
+                break;
+            }
+
+            if (keyInfo.KeyChar == targetCharacter[0])
+            {
+                score++;
+                Console.WriteLine(" - Верно!");
+            }
+            else
+            {
+                Console.Beep();
+                Console.WriteLine(" - Неверно!");
+                score = 0;
+            }
+        }
+
+        Console.WriteLine($"Результат: {score} правильно введенных символов.");
+    }
+}

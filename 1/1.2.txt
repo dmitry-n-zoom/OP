@@ -1,0 +1,20 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double totalDistance = 3;
+        double dailyDistance = 3;
+        int days = 1;
+
+        while (totalDistance <= 57)
+        {
+            dailyDistance += dailyDistance * 0.2;
+            totalDistance += dailyDistance;
+            days++;
+        }
+
+        Console.WriteLine($"Спортсмен пробежит более 57 км через {days} дней");
+    }
+}

@@ -1,0 +1,35 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введите число A: ");
+        int A = int.Parse(Console.ReadLine());
+
+        Console.Write("Введите число B: ");
+        int B = int.Parse(Console.ReadLine());
+
+        if (A < B)
+        {
+            // Вывод чисел по возрастанию
+            for (int i = A; i <= B; i++)
+            {
+                Console.WriteLine(i);
+            }
+        }
+        else if (A > B)
+        {
+            // Вывод чисел по убыванию
+            for (int i = A; i >= B; i--)
+            {
+                Console.WriteLine(i);
+            }
+        }
+        else
+        {
+            // A равно B, выводим одно число
+            Console.WriteLine(A);
+        }
+    }
+}

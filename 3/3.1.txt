@@ -1,0 +1,26 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введите величину вклада: ");
+        double depositAmount = double.Parse(Console.ReadLine());
+
+        Console.Write("Введите процентную ставку (годовых): ");
+        double interestRate = double.Parse(Console.ReadLine());
+
+        Console.Write("Введите срок вклада (количество дней): ");
+        int depositPeriod = int.Parse(Console.ReadLine());
+
+        double income = CalculateDepositIncome(depositAmount, interestRate, depositPeriod);
+
+        Console.WriteLine($"Доход по вкладу: {income}");
+    }
+
+    static double CalculateDepositIncome(double depositAmount, double interestRate, int depositPeriod)
+    {
+        double interest = depositAmount * (interestRate / 100) * (depositPeriod / 365);
+        return interest;
+    }
+}

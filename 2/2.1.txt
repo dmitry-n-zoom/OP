@@ -1,0 +1,75 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введите размерность массива N: ");
+        int N = int.Parse(Console.ReadLine());
+
+        double[] arr = new double[N];
+
+        for (int i = 0; i < N; i++)
+        {
+            Console.Write($"Введите элемент массива[{i}]: ");
+            arr[i] = double.Parse(Console.ReadLine());
+        }
+
+        Console.Write("Введите значение C: ");
+        double C = double.Parse(Console.ReadLine());
+
+        // Вычисление количества элементов массива, меньших C
+        int countLessThanC = 0;
+        for (int i = 0; i < N; i++)
+        {
+            if (arr[i] < C)
+                countLessThanC++;
+        }
+
+        // Вычисление суммы целых частей элементов массива после последнего отрицательного элемента
+        double sumIntegerPart = 0;
+        bool foundNegative = false;
+        for (int i = N - 1; i >= 0; i--)
+        {
+            if (foundNegative)
+            {
+                sumIntegerPart += (int)arr[i];
+            }
+            else if (arr[i] < 0)
+            {
+                foundNegative = true;
+            }
+        }
+
+        // Преобразование массива
+        double maxElement = arr[0];
+        for (int i = 1; i < N; i++)
+        {
+            if (arr[i] > maxElement)
+                maxElement = arr[i];
+        }
+
+        double threshold = maxElement * 0.2;
+        int index = 0;
+
+        for (int i = 0; i < N; i++)
+        {
+            if (Math.Abs(arr[i] - maxElement) <= threshold)
+            {
+                double temp = arr[i];
+                arr[i] = arr[index];
+                arr[index] = temp;
+                index++;
+            }
+        }
+
+        Console.WriteLine($"Количество элементов массива, меньших C: {countLessThanC}");
+        Console.WriteLine($"Сумма целых частей элементов после последнего отрицательного элемента: {sumIntegerPart}");
+
+        Console.WriteLine("Преобразованный массив:");
+        for (int i = 0; i < N; i++)
+        {
+            Console.WriteLine($"arr[{i}] = {arr[i]}");
+        }
+    }
+}
