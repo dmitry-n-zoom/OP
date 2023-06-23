@@ -1,0 +1,63 @@
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        // Генерация случайных чисел и запись их во входной файл
+        Random random = new Random();
+        using (StreamWriter inputFile = new StreamWriter("input.txt"))
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                int randomNumber = random.Next(-100, 101);
+                inputFile.WriteLine(randomNumber);
+            }
+        }
+
+        // Чтение входного файла и выполнение задания
+        using (StreamReader inputFile = new StreamReader("input.txt"))
+        using (StreamWriter outputFile = new StreamWriter("output.txt"))
+        {
+            int lineNumber = 1;
+            int countNegative = 0;
+            int firstNegative = 0;
+            int lastNegative = 0;
+
+            // Поиск первого и последнего отрицательных чисел
+            while (!inputFile.EndOfStream)
+            {
+                int number = int.Parse(inputFile.ReadLine());
+
+                if (number < 0)
+                {
+                    countNegative++;
+                    if (countNegative == 1)
+                        firstNegative = number;
+                    lastNegative = number;
+                }
+
+                lineNumber++;
+            }
+
+            inputFile.BaseStream.Seek(0, SeekOrigin.Begin); // Вернуться в начало файла
+
+            lineNumber = 1;
+            // Запись выходного файла
+            while (!inputFile.EndOfStream)
+            {
+                int number = int.Parse(inputFile.ReadLine());
+
+                if (lineNumber % 3 == 0)
+                    number *= 2 * (firstNegative + lastNegative);
+
+                outputFile.WriteLine(number);
+
+                lineNumber++;
+            }
+        }
+
+        Console.WriteLine("Готово! Результат записан в файл output.txt.");
+    }
+}

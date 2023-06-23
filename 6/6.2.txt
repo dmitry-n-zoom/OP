@@ -1,0 +1,85 @@
+using System;
+
+namespace PaymentExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Создание объекта Payment
+            Payment payment = new Payment("Иванов Иван Иванович", 50000, 2010, 5, 1, 22, 30);
+
+            // Вычисление начисленной суммы
+            double accruedAmount = payment.CalculateAccruedAmount();
+            Console.WriteLine($"Начисленная сумма: {accruedAmount}");
+
+            // Вычисление удержанной суммы
+            double withheldAmount = payment.CalculateWithheldAmount();
+            Console.WriteLine($"Удержанная сумма: {withheldAmount}");
+
+            // Вычисление суммы, выдаваемой на руки
+            double netAmount = payment.CalculateNetAmount();
+            Console.WriteLine($"Сумма, выдаваемая на руки: {netAmount}");
+
+            // Вычисление стажа
+            int experience = payment.CalculateExperience();
+            Console.WriteLine($"Стаж работы: {experience} лет");
+        }
+    }
+
+    class Payment
+    {
+        // Поля для хранения данных о зарплате
+        private string fullName;
+        private double salary;
+        private int employmentYear;
+        private double bonusPercentage;
+        private double pensionContribution;
+        private int workedDays;
+        private int workingDays;
+
+        // Конструктор класса Payment
+        public Payment(string fullName, double salary, int employmentYear, double bonusPercentage, double pensionContribution, int workedDays, int workingDays)
+        {
+            this.fullName = fullName;
+            this.salary = salary;
+            this.employmentYear = employmentYear;
+            this.bonusPercentage = bonusPercentage;
+            this.pensionContribution = pensionContribution;
+            this.workedDays = workedDays;
+            this.workingDays = workingDays;
+        }
+
+        // Метод для вычисления начисленной суммы
+        public double CalculateAccruedAmount()
+        {
+            double baseAmount = salary / workingDays * workedDays;
+            double bonusAmount = baseAmount * (bonusPercentage / 100);
+            return baseAmount + bonusAmount;
+        }
+
+        // Метод для вычисления удержанной суммы
+        public double CalculateWithheldAmount()
+        {
+            double accruedAmount = CalculateAccruedAmount();
+            double pensionContributionAmount = accruedAmount * (pensionContribution / 100);
+            double incomeTaxAmount = accruedAmount * 0.13;
+            return pensionContributionAmount + incomeTaxAmount;
+        }
+
+        // Метод для вычисления суммы, выдаваемой на руки
+        public double CalculateNetAmount()
+        {
+            double accruedAmount = CalculateAccruedAmount();
+            double withheldAmount = CalculateWithheldAmount();
+            return accruedAmount - withheldAmount;
+        }
+
+        // Метод для вычисления стажа
+        public int CalculateExperience()
+        {
+            int currentYear = DateTime.Now.Year;
+            return currentYear - employmentYear;
+        }
+    }
+}

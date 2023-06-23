@@ -1,0 +1,101 @@
+using System;
+
+// Абстрактный класс "Документ"
+public abstract class Document
+{
+    protected string content;
+
+    // Конструктор для создания документа
+    public Document(string content)
+    {
+        this.content = content;
+        Console.WriteLine("Документ создан.");
+    }
+
+    // Абстрактный метод для копирования документа
+    public abstract Document Copy();
+
+    // Абстрактный метод для перемещения документа
+    public abstract void Move(string destination);
+
+    // Метод для удаления документа
+    public virtual void Delete()
+    {
+        Console.WriteLine("Документ удален.");
+    }
+
+    // Метод для наполнения содержимым
+    public virtual void FillContent(string newContent)
+    {
+        content = newContent;
+        Console.WriteLine("Документ заполнен новым содержимым.");
+    }
+}
+
+// Класс "Зашифрованный документ", наследуется от класса "Документ"
+public class EncryptedDocument : Document
+{
+    private string encryptionKey;
+
+    // Конструктор для создания зашифрованного документа
+    public EncryptedDocument(string content, string encryptionKey) : base(content)
+    {
+        this.encryptionKey = encryptionKey;
+        Console.WriteLine("Зашифрованный документ создан.");
+    }
+
+    // Метод для расшифровки содержимого
+    public string DecryptContent()
+    {
+        // Расшифровка содержимого с использованием encryptionKey
+        // В данном примере просто возвращаем исходное содержимое
+        return content;
+    }
+
+    // Метод для копирования зашифрованного документа
+    public override Document Copy()
+    {
+        // Создание нового зашифрованного документа с тем же содержимым и ключом шифрования
+        return new EncryptedDocument(content, encryptionKey);
+    }
+
+    // Метод для перемещения зашифрованного документа
+    public override void Move(string destination)
+    {
+        // Логика перемещения зашифрованного документа
+        Console.WriteLine($"Зашифрованный документ перемещен в {destination}.");
+    }
+
+    // Переопределение метода удаления документа
+    public override void Delete()
+    {
+        // Логика удаления зашифрованного документа
+        Console.WriteLine("Зашифрованный документ удален.");
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        // Пример использования классов
+
+        // Создание зашифрованного документа
+        EncryptedDocument encryptedDocument = new EncryptedDocument("Зашифрованное содержимое", "ключ");
+
+        // Копирование документов
+        Document copiedEncryptedDocument = encryptedDocument.Copy();
+
+        // Перемещение документов
+        encryptedDocument.Move("Защищенная папка");
+
+        // Расшифровка содержимого зашифрованного документа
+        string decryptedContent = encryptedDocument.DecryptContent();
+        Console.WriteLine("Расшифрованное содержимое: " + decryptedContent);
+
+        // Удаление документов
+        encryptedDocument.Delete();
+
+        Console.ReadLine();
+    }
+}

@@ -1,0 +1,30 @@
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        string filePath = "generated_text.txt";
+
+        // Чтение содержимого текстового файла
+        string text = File.ReadAllText(filePath);
+
+        Console.WriteLine("Введите номер строки для подсчета символов:");
+        int lineNumber = int.Parse(Console.ReadLine());
+
+        // Проверка на корректность номера строки
+        string[] lines = text.Split('\n');
+        if (lineNumber < 1 || lineNumber > lines.Length)
+        {
+            Console.WriteLine("Некорректный номер строки.");
+            return;
+        }
+
+        // Получение строки с заданным номером и подсчет символов
+        string targetLine = lines[lineNumber - 1];
+        int characterCount = targetLine.Length;
+
+        Console.WriteLine($"Количество символов в строке {lineNumber}: {characterCount}");
+    }
+}

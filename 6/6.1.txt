@@ -1,0 +1,70 @@
+using System;
+
+namespace PointExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Создание объекта Point
+            Point point = new Point(3, 4);
+            
+            // Перемещение точки по оси X
+            point.MoveX(2);
+            
+            // Перемещение точки по оси Y
+            point.MoveY(-1);
+            
+            // Определение расстояния до начала координат
+            double distanceToOrigin = point.DistanceToOrigin();
+            Console.WriteLine($"Расстояние до начала координат: {distanceToOrigin}");
+            
+            // Создание второй точки
+            Point anotherPoint = new Point(-1, 2);
+            
+            // Расстояние между двумя точками
+            double distanceBetweenPoints = point.DistanceTo(anotherPoint);
+            Console.WriteLine($"Расстояние между точками: {distanceBetweenPoints}");
+        }
+    }
+
+    class Point
+    {
+        // Поля для хранения координат точки
+        private double x;
+        private double y;
+
+        // Конструктор класса Point
+        public Point(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        // Метод для перемещения точки по оси X
+        public void MoveX(double dx)
+        {
+            x += dx;
+        }
+
+        // Метод для перемещения точки по оси Y
+        public void MoveY(double dy)
+        {
+            y += dy;
+        }
+
+        // Метод для определения расстояния до начала координат
+        public double DistanceToOrigin()
+        {
+            return Math.Sqrt(x * x + y * y);
+        }
+
+        // Метод для определения расстояния между двумя точками
+        public double DistanceTo(Point otherPoint)
+        {
+            double dx = x - otherPoint.x;
+            double dy = y - otherPoint.y;
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
+    }
+}
